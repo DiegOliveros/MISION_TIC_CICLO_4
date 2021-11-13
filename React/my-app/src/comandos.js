@@ -34,8 +34,8 @@ db.productos.insert({
     "activo": true,
     "creado": new Date("09/11/2021"),
     "facturador": {
-        "nombre":"dell",
-        "version":"dv6000"
+        "nombre": "dell",
+        "version": "dv6000"
     }
 
 })
@@ -46,20 +46,20 @@ db.productos.insertOne({
     "activo": true,
     "creado": new Date("09/11/2021"),
     "facturador": {
-        "nombre":"dell",
-        "version":"dv7000"
+        "nombre": "dell",
+        "version": "dv7000"
     }
 
 })
 
 db.productos.insertOne({
     "nombre": "teclado",
-    "precio": 10,
+    "precio": 60,
     "activo": true,
-    "creado": new Date("09/11/2021"),
+    "creado": new Date("13/11/2021"),
     "facturador": {
-        "nombre":"dell",
-        "version":"dv8000"
+        "nombre": "dell",
+        "version": "2021"
     }
 
 })
@@ -70,8 +70,8 @@ db.productos.insertOne({
     "activo": true,
     "creado": new Date("09/11/2021"),
     "facturador": {
-        "nombre":"dell",
-        "version":"mouse3"
+        "nombre": "dell",
+        "version": "mouse3"
     }
 
 })
@@ -83,10 +83,10 @@ db.productos.insertOne({
 //3. PID
 //4. Auto incremento
 
-usuario ={
-"nombre":"Diego Iván",
-"apellido":"Oliveros Acosta",
-"correo":"ceo@scalapp.co"
+usuario = {
+    "nombre": "Diego Iván",
+    "apellido": "Oliveros Acosta",
+    "correo": "ceo@scalapp.co"
 };
 
 db.usuario.insert(usuario);
@@ -115,9 +115,9 @@ db.usuarios.insertMany(
 )
 
 db.productos.update(
-    {"facturador.version":"dv8000"},
-    {$inc:{"precio":10}}
-    
+    { "facturador.version": "dv8000" },
+    { $inc: { "precio": 10 } }
+
 );
 //operadores:
 //gt              >
@@ -127,12 +127,124 @@ db.productos.update(
 //ne              !=
 
 //¿Quién es el usuario con nombre Diego?
+
+db.usuarios.find({
+    nombre: "Diego Iván"
+})
+
+db.usuarios.find({
+    Apellido: "Paz"
+})
+
+db.usuarios.findOne({
+    Apellido: "Paz"
+})
+
+db.usuarios.find({
+    Apellido: "Paz"
+}).sort({ nombre: 1 })
+
+
 //¿Qué productos son más costosos de 10 USD?
+
+db.productos.find() //todos 
 //¿qué teclados tienen un precio menor a 50 USD?
 
 db.productos.find({
-$and: [
-    {precio:{$lte:50}},
-    {nombre: "teclado"}
-]
-    });
+    $and: [
+        { precio: { $lte: 50 } },
+        { nombre: "teclado" }
+    ]
+});
+//¿qué teclados tienen un precio mayor a 60 USD?
+db.productos.find({
+    $and: [
+        { precio: { $gt: 60 } },
+        { nombre: "teclado" }
+    ]
+});
+//¿qué teclados tienen un precio mayor e igual a 60 USD?
+db.productos.find({
+    $and: [
+        { precio: { $gte: 60 } },
+        { nombre: "teclado" }
+    ]
+});
+//¿Qué productos tienen un precio menor a 80 UDS?
+db.productos.find({
+    precio: { $lt: 80 }
+});
+//¿Cuántos productos tienen un precio menor a 80 UDS?
+db.productos.find({
+    precio: { $lt: 80 }
+}).count();
+
+//cambiar el estado de un producto 
+db.productos.update(
+    { "facturador.version": "dv8000" },
+    { $set: { "activo": false } }
+);
+db.productos.update(
+    { "facturador.version": "mouse3" },
+    { $set: { "activo": false } }
+);
+//¿cuáles son todos los productos que se han vendido?
+db.productos.find({ "activo": false });
+//$ne
+db.productos.find({
+    activo: { $ne: true }
+});
+
+
+//¿cuáles son todos los computadores que se han vendido?
+
+db.productos.find({
+    $and: [
+        { nombre: "computador" },
+        { "activo": false }
+    ]
+});
+//¿cuáles son todos los computadores que no son versión dv8000?
+
+db.productos.find({
+    $and: [
+        { nombre: "computador" },
+        { "facturador.version": { $ne: "dv8000" } }
+    ]
+});
+
+//¿cuáles son todos los computadores que no son versión dv8000 ni dv6000?
+
+db.productos.find({
+    $and: [
+        { nombre: "computador" },
+        { "facturador.version": { $ne: "dv8000" } },
+        { "facturador.version": { $ne: "dv6000" } }
+    ]
+});
+
+db.productos.find({
+    $or: [
+        { nombre: "computador" },
+        { "facturador.version": { $ne: "dv8000" } },
+        { "facturador.version": { $ne: "dv6000" } }
+    ]
+});
+
+db.usuarios.find({
+       
+     edad: { $in: [10,20]}   
+        
+}   
+    );
+
+//Cuáles versiones finalizan con 8000
+db.productos.find({"facturador.version":/8000$/})
+
+//Cuáles son los productos cuya version comienza con dv   
+//circunflejo Alt94
+db.productos.find({"facturador.version":/^dv/})
+
+//Cuáles son los productos que tienen "7"  
+//circunflejo Alt94
+db.productos.find({"facturador.version":/7/})
