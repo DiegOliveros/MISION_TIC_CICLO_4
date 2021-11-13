@@ -232,19 +232,112 @@ db.productos.find({
 });
 
 db.usuarios.find({
-       
-     edad: { $in: [10,20]}   
-        
-}   
-    );
+
+    edad: { $in: [10, 20] }
+
+}
+);
 
 //Cuáles versiones finalizan con 8000
-db.productos.find({"facturador.version":/8000$/})
+db.productos.find({ "facturador.version": /8000$/ })
 
 //Cuáles son los productos cuya version comienza con dv   
 //circunflejo Alt94
-db.productos.find({"facturador.version":/^dv/})
+db.productos.find({ "facturador.version": /^dv/ })
 
 //Cuáles son los productos que tienen "7"  
 //circunflejo Alt94
-db.productos.find({"facturador.version":/7/})
+db.productos.find({ "facturador.version": /7/ })
+
+
+db.usuarios.update(
+    {
+        "_id": ObjectId("618b146f0144676571d94bc1")
+    },
+    {
+        $set: {
+            nombre: "Marta",
+            apellido: "Torres",
+            correo: "marta.torres@unmail.com",
+            error: "un mal atrib"
+        }
+    }
+)
+
+db.usuarios.update(
+    {
+        "_id": ObjectId("618b146f0144676571d94bc1")
+    },
+    {
+        $unset: {
+            error: true
+        }
+    }
+)
+
+// cambiar todos los correos de los usuarios por uncorreo@gmail.com 
+
+db.usuarios.updateMany(
+    {
+        "correo": { $exists: true },
+    },
+    {    $set: {
+            "correo": "uncorreo@gmail.com"
+        }
+    }
+
+);
+
+// cambiar todos los correos de los usuarios con dominio @getDefaultNormalizer.com por gmail.com. 
+
+
+db.usuarios.updateMany(
+    {
+        "correo": /@getDefaultNormalizer.com$/
+    },
+    {    $set: {
+            "correo": "uncorreo@gmail.com"
+        }
+    }
+
+);
+
+
+db.usuarios.find({"correo": /@getDefaultNormalizer.com$/})
+
+
+db.usuarios.find({"correo": /@scalapp.co$/})
+db.usuarios.updateMany(
+    {
+        "correo": /@gmail.com$/
+    },
+    {    $set: {
+            "correo": "ceo@scalapp.co"
+        }
+    }
+
+);
+
+db.usuarios.updateMany(
+    {
+        "nombre" : "Marta" 
+    },
+    {    $set: {
+            "correo": "marta@gmail.com"
+        }
+    }
+
+);
+
+
+
+db.usuarios.updateMany(
+    {
+        "nombre" : "Marta" 
+    },
+    {    $set: {
+            "correo": `${variable}@gmail.com`
+        }
+    }
+
+);
