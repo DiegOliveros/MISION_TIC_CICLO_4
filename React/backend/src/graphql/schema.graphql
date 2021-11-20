@@ -1,3 +1,15 @@
-type Query {}
+type Query {
+    hola: String!
+    productos: [Producto!]
+}
 
-type Mutation{}
+type Mutation{
+    createProducto(nombre: String!, descrip: String!, almacen: String!):Producto
+}
+
+type Producto {
+    _id: ID!
+    nombre: String!
+    descrip: String!
+    almacen: String!
+}
