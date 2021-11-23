@@ -1,10 +1,20 @@
 type Query {
     hola: String!
     productos: [Producto!]
+    personas: [Person!]
+    allPersons(last:Int):[Person!]
+    allPost(last:Int):[Post!] 
 }
 
 type Mutation{
     createProducto(nombre: String!, descrip: String!, almacen: String!):Producto
+    createPerson(name:String!, age: String!): Person!
+    updatePerson(id:ID!, name:String!, age: Int!): Person!
+    deletePerson(id:ID!): Person!
+
+    createPost(title:String!, autor:String!): Post!
+    updatePost(id:ID!, title:String!): Post!
+    deletePost(id:ID!): Post!
 }
 
 type Producto {
@@ -12,4 +22,26 @@ type Producto {
     nombre: String!
     descrip: String!
     almacen: String!
+}
+
+type Person {
+    _id: ID!
+    name: String!
+    age: Int!
+    posts: [Post]
+}
+type Post {
+    _id: ID!
+    title: String!
+    autor: Person!
+    
+}
+
+type Subscription{
+    newPerson:Person!
+    updatePerson:Person!
+    deletePerson:Person!
+    newPost:Post!
+    updatePost:Post!
+    deletePost:Post!
 }

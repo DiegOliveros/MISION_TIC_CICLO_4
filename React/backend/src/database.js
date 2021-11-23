@@ -10,7 +10,7 @@ mongoose.connect("mongodb+srv://admin:EUglKwMjDBrW5MTU@mytienda.pgtba.mongodb.ne
 
 /* Otra forma con atlas:
 
-    const { MongoClient } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://admin:<password>@mytienda.pgtba.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
