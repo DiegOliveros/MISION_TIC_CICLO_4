@@ -1,0 +1,29 @@
+.productCard{
+    list-style: none;
+    font-style: normal;
+    text-align: center;
+
+}
+.productImage{
+    width: 200px;
+    height: 150px;
+    border-radius: 20px;
+    background-color: azure;
+}
+
+@media (max-width: 560px){
+    .productImage{
+        width: 90%;
+        height: 15px;
+        border-radius: 20px;
+        background-color: azure;
+    }
+
+}
+.productGrid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 230px);
+    gap: 40px;
+    padding: 40px;
+    justify-content: center;
+}
