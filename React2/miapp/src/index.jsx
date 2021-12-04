@@ -56,6 +56,9 @@ const Lifecycle =()=>{
     const [contador2, setContador2] = useState(0);
     useEffect( () => {console.log("useEffect []")}, [])
     useEffect( () => {console.log("useEffect sin dependencia '[]'")})
+    useEffect( () => {console.log("useEffect con dependencia '[contador1]'")}, [contador1])
+    useEffect( () => {console.log("useEffect con dependencia '[contador1]'y'[contador2]'")}, [contador1, contador2])
+
 return(
 <div>
 <h1> El número de clicks del boton 1 es: {contador1}</h1>
